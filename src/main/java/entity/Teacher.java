@@ -25,4 +25,8 @@ public class Teacher {
         ASSISTANT, SENIOR_ASSISTANT, ASSOCIATE_PROFESSOR, PROFESSOR
     }
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 }

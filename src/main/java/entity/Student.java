@@ -20,4 +20,8 @@ public class Student {
     @Column(nullable = false, unique = true)
     private String facultyNumber;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 }

@@ -1,4 +1,4 @@
-package com.project.graduation_process_management;
+package com.project;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
