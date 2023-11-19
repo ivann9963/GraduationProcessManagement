@@ -1,6 +1,6 @@
-package service;
+package com.project.service;
 
-import entity.Student;
+import com.project.entity.Student;
 
 import java.util.List;
 import java.util.Optional;

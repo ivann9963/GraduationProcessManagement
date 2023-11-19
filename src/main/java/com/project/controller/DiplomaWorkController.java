@@ -1,10 +1,10 @@
-package com.youruniversity.project.controller;
+package com.project.controller;
 
-import entity.DiplomaWork;
+import com.project.entity.DiplomaWork;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.DiplomaWorkService;
+import com.project.service.DiplomaWorkService;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package repository;
+package com.project.repository;
 
-import entity.DiplomaWork;
+import com.project.entity.DiplomaWork;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

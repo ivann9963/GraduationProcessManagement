@@ -1,6 +1,6 @@
-package service;
+package com.project.service;
 
-import entity.DiplomaWork;
+import com.project.entity.DiplomaWork;
 
 import java.util.List;
 import java.util.Optional;

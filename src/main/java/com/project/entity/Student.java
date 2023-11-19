@@ -1,4 +1,4 @@
-package entity;
+package com.project.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -21,7 +21,7 @@ public class Student {
     private String facultyNumber;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "id")
     private User user;
 
 }

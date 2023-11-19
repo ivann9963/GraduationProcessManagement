@@ -1,4 +1,4 @@
-package entity;
+package com.project.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,6 +11,7 @@ import java.util.Collection;
 @Entity
 @Getter
 @Setter
+@Table(name="users")
 public class User implements UserDetails {
 
     @Id
@@ -20,10 +21,10 @@ public class User implements UserDetails {
     private String username;
     private String password;
 
-    @OneToOne(mappedBy = "id", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Student student;
 
-    @OneToOne(mappedBy = "id", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Teacher teacher;
 
     @Override
@@ -33,12 +34,12 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return this.username;
     }
 
     @Override

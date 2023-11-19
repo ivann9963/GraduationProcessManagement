@@ -1,9 +1,9 @@
-package service;
+package com.project.service;
 
-import entity.DiplomaWork;
+import com.project.entity.DiplomaWork;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.DiplomaWorkRepository;
+import com.project.repository.DiplomaWorkRepository;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,10 +1,10 @@
-package controller;
+package com.project.controller;
 
-import entity.Teacher;
+import com.project.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.TeacherService;
+import com.project.service.TeacherService;
 
 import java.util.List;
 
