@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -23,9 +24,15 @@ public class ManagementSystem {
     private Long id;
 
     @OneToMany
+    @JoinColumn(name = "student_id")
     private Set<User> students;
 
     @OneToMany
+    @JoinColumn(name="teacher_id")
     private Set<User> teachers;
+
+    @OneToMany
+    @JoinColumn(name = "management_system_id") // This column is in the diploma_acceptance table
+    private Set<DiplomaAcceptance> diplomaAcceptances;
 
 }

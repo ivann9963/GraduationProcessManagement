@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DiplomaReviewService {
-    DiplomaReview createReview(DiplomaReview review);
-    Optional<DiplomaReview> getReviewById(Long id);
-    List<DiplomaReview> getAllReviews();
-    DiplomaReview updateReview(Long id, DiplomaReview reviewDetails);
-    void deleteReview(Long id);
+    List<DiplomaReview> findAll();
+
+    Optional<DiplomaReview> findById(Long id);
+
+    DiplomaReview save(DiplomaReview diplomaReview);
+
+    void deleteById(Long id);
 }
+

@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DiplomaDefenseService {
-    DiplomaDefense createDefense(DiplomaDefense defense);
-    Optional<DiplomaDefense> getDefenseById(Long id);
-    List<DiplomaDefense> getAllDefenses();
-    DiplomaDefense updateDefense(Long id, DiplomaDefense defenseDetails);
-    void deleteDefense(Long id);
+    List<DiplomaDefense> findAll();
+
+    Optional<DiplomaDefense> findById(Long id);
+
+    DiplomaDefense save(DiplomaDefense diplomaDefense);
+
+    void deleteById(Long id);
 }

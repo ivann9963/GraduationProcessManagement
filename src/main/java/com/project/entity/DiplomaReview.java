@@ -21,7 +21,6 @@ import java.util.Date;
 @Entity
 @Table(name = "diploma_reviews")
 public class DiplomaReview {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 @Setter
 @Entity
-@Table(name = "users") // This table will hold the common fields
+@Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User implements UserDetails {
 

@@ -1,6 +1,8 @@
 package com.project.service;
 
 import com.project.entity.DiplomaReview;
+import com.project.repository.DiplomaReviewRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,28 +10,27 @@ import java.util.Optional;
 
 @Service
 public class DiplomaReviewServiceImpl implements DiplomaReviewService {
-    @Override
-    public DiplomaReview createReview(DiplomaReview review) {
-        return null;
+    private final DiplomaReviewRepository diplomaReviewRepository;
+
+    @Autowired
+    public DiplomaReviewServiceImpl(DiplomaReviewRepository diplomaReviewRepository) {
+        this.diplomaReviewRepository = diplomaReviewRepository;
     }
 
-    @Override
-    public Optional<DiplomaReview> getReviewById(Long id) {
-        return Optional.empty();
+
+    public List<DiplomaReview> findAll() {
+        return diplomaReviewRepository.findAll();
     }
 
-    @Override
-    public List<DiplomaReview> getAllReviews() {
-        return null;
+    public Optional<DiplomaReview> findById(Long id) {
+        return diplomaReviewRepository.findById(id);
     }
 
-    @Override
-    public DiplomaReview updateReview(Long id, DiplomaReview reviewDetails) {
-        return null;
+    public DiplomaReview save(DiplomaReview diplomaReview) {
+        return diplomaReviewRepository.save(diplomaReview);
     }
 
-    @Override
-    public void deleteReview(Long id) {
-
+    public void deleteById(Long id) {
+        diplomaReviewRepository.deleteById(id);
     }
 }
