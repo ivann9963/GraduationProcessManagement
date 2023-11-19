@@ -8,20 +8,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "students")
-public class Student {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Student extends User {
 
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false, unique = true)
     private String facultyNumber;
-
-    @OneToOne
-    @JoinColumn(name = "id")
-    private User user;
 
 }

@@ -1,6 +1,7 @@
 package repository;
 
 import com.project.GraduationProcessManagementApplication;
+import com.project.entity.Student;
 import com.project.entity.User;
 import com.project.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,11 +28,11 @@ public class UserRepositoryTest {
     @Mock
     private UserRepository userRepository;
 
-    private User user;
+    private Student user;
 
     @BeforeEach
     public void setUp() {
-        user = new User();
+        user = new Student();
         user.setUsername("testUser");
         user.setPassword("password");
 

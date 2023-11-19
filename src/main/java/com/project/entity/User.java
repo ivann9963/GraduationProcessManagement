@@ -1,18 +1,22 @@
 package com.project.entity;
 
-import jakarta.persistence.*;
-import lombok.Getter;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Table;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-
-@Entity
-@Getter
 @Setter
-@Table(name="users")
-public class User implements UserDetails {
+@Entity
+@Table(name = "users") // This table will hold the common fields
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,12 +24,6 @@ public class User implements UserDetails {
 
     private String username;
     private String password;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Student student;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Teacher teacher;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
