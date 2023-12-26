@@ -17,6 +17,11 @@ public class Teacher extends User{
     @Column(nullable = false)
     private Position position;
 
+    @Override
+    public Role getRole() {
+        return Role.TEACHER;
+    }
+
     public enum Position {
         ASSISTANT, SENIOR_ASSISTANT, ASSOCIATE_PROFESSOR, PROFESSOR
     }

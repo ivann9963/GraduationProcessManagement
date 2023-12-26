@@ -34,5 +34,4 @@ public class DiplomaWorkServiceImpl implements DiplomaWorkService {
         diplomaWorkRepository.deleteById(id);
     }
 
-    // Update method can be similar to save, depending on how you handle it in the controller
 }

@@ -9,9 +9,12 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
+
 @Setter
 @Entity
 @Table(name = "users")
@@ -25,9 +28,13 @@ public abstract class User implements UserDetails {
     private String username;
     private String password;
 
+    public enum Role {
+        STUDENT, TEACHER
+    }
+    public abstract Role getRole();
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + getRole().name()));
     }
 
     @Override

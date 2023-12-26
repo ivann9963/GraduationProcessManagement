@@ -10,6 +10,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "defenses")
 public class DiplomaDefense {
@@ -25,4 +27,7 @@ public class DiplomaDefense {
     // Assuming there is a predefined list of grades, otherwise adjust accordingly
     @Column(nullable = false)
     private String grade;
+
+    @Column
+    private Date dateOfDefence;
 }
