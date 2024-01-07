@@ -32,7 +32,7 @@ public class ManagementSystem {
     private Set<User> teachers;
 
     @OneToMany
-    @JoinColumn(name = "management_system_id") // This column is in the diploma_acceptance table
+    @JoinColumn(name = "management_system_id")
     private Set<DiplomaAcceptance> diplomaAcceptances;
 
 }

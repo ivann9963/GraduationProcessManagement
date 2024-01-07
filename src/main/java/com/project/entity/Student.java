@@ -10,10 +10,10 @@ import lombok.Setter;
 @Table(name = "students")
 public class Student extends User {
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
+//    @Column(nullable = false, unique = true)
     private String facultyNumber;
 
     @Override

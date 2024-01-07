@@ -10,11 +10,11 @@ import lombok.Setter;
 @Table(name = "teachers")
 public class Teacher extends User{
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private Position position;
 
     @Override
