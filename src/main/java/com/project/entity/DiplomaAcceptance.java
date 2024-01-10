@@ -19,7 +19,7 @@ public class DiplomaAcceptance {
 
     @OneToOne
     @JoinColumn(name = "diploma_work_id", referencedColumnName = "id")
-    private DiplomaWork diplomaWork;
+    private Thesis thesis;
 
     @Column(name = "is_accepted")
     private Boolean isAccepted;

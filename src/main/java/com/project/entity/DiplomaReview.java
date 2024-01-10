@@ -27,7 +27,7 @@ public class DiplomaReview {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "diploma_work_id")
-    private DiplomaWork diplomaWork;
+    private Thesis thesis;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id")

@@ -22,7 +22,7 @@ public class DiplomaDefense {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diploma_work_id")
-    private DiplomaWork diplomaWork;
+    private Thesis thesis;
 
     // Assuming there is a predefined list of grades, otherwise adjust accordingly
     @Column(nullable = false)

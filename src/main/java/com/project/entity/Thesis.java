@@ -16,7 +16,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "diploma_works")
-public class DiplomaWork {
+public class Thesis {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -33,6 +33,8 @@ public class ManagementSystem {
 
     @OneToMany
     @JoinColumn(name = "management_system_id")
-    private Set<DiplomaAcceptance> diplomaAcceptances;
+    private Set<Thesis> thesis;
+
+
 
 }
