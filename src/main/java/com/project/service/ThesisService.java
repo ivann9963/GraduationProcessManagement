@@ -1,16 +1,13 @@
 package com.project.service;
 
 import com.project.entity.Thesis;
-
-import java.util.List;
-import java.util.Optional;
+import com.project.entity.ThesisReview;
 
 public interface ThesisService {
-    List<Thesis> findAll();
-
-    Optional<Thesis> findById(Long id);
-
     Thesis save(Thesis thesis);
 
-    void deleteById(Long id);
+    Thesis uploadThesis(Thesis thesis);
+
+    void processThesis(Long thesisId, ThesisReview thesisReview) throws Exception;
+
 }

@@ -1,9 +1,10 @@
 package Controller;
 
 import com.project.GraduationProcessManagementApplication;
-import com.project.controller.ManagementSystemController;
+import com.project.controller.ThesisController;
 import com.project.entity.Thesis;
-import com.project.service.ManagementService;
+import com.project.entity.ThesisReview;
+import com.project.service.ThesisService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,9 +21,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -30,13 +35,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = GraduationProcessManagementApplication.class)
-public class ManagementSystemControllerTest {
+public class ThesisControllerTest {
 
     @Mock
-    private ManagementService managementService;
+    private ThesisService thesisService;
 
     @InjectMocks
-    private ManagementSystemController managementSystemController;
+    private ThesisController thesisController;
 
     private MockMvc mockMvc;
 
@@ -44,9 +49,11 @@ public class ManagementSystemControllerTest {
 
     private Thesis sampleThesis;
 
+    private ThesisReview thesisReview;
+
     @BeforeEach
     public void setup() throws ParseException {
-        mockMvc = MockMvcBuilders.standaloneSetup(managementSystemController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(thesisController).build();
 
 
         sampleThesis = new Thesis();
@@ -57,14 +64,19 @@ public class ManagementSystemControllerTest {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date submissionDate = dateFormat.parse("2023-01-01");
         sampleThesis.setSubmissionDate(submissionDate);
+
+        thesisReview = new ThesisReview();
+        thesisReview.setSubmissionDate(new Date());
+        thesisReview.setText("Sample review text");
+        thesisReview.setConclusion(true);
     }
 
     @Test
     @WithMockUser(username = "student", roles = {"STUDENT"})
     public void whenUploadThesis_thenReturnsThesis() throws Exception {
-        given(managementService.uploadThesis(any(Thesis.class))).willReturn(sampleThesis);
+        given(thesisService.uploadThesis(any(Thesis.class))).willReturn(sampleThesis);
 
-        mockMvc.perform(post("/api/management-system/upload-thesis")
+        mockMvc.perform(post("/api/thesis/upload-thesis")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(sampleThesis)))
                 .andExpect(status().isOk())
@@ -74,12 +86,22 @@ public class ManagementSystemControllerTest {
     @Test
     @WithMockUser(username = "teacher", roles = {"TEACHER"})
     public void whenProcessThesis_thenSuccess() throws Exception {
-        given(managementService.processThesis(any(Thesis.class))).willReturn(null); // Assuming void return
+        Long thesisId = 1L;
+        Thesis thesis = new Thesis();
+        thesis.setId(thesisId);
+        thesisReview.setThesis(thesis);
 
-        mockMvc.perform(post("/api/management-system/process-thesis")
+        doNothing().when(thesisService).processThesis(eq(thesisId), any(ThesisReview.class));
+
+        mockMvc.perform(post("/api/thesis/process-thesis")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(sampleThesis)))
+                        .content(objectMapper.writeValueAsString(thesisReview)))
                 .andExpect(status().isOk());
+
+        verify(thesisService).processThesis(eq(thesisId), any(ThesisReview.class));
     }
+
+
+
 
 }

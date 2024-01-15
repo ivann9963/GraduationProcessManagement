@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -17,23 +18,23 @@ import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "diploma_works")
+@Table(name = "thesis")
 public class Thesis {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column
     private String title;
 
-    @Column(nullable = false)
+    @Column
     private String objective;
 
-    @Column(nullable = false)
+    @Column
     private String tasks;
 
-    @Column(nullable = false)
+    @Column
     private String technologies;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -44,9 +45,12 @@ public class Thesis {
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
-    @Column(nullable = false)
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date submissionDate;
+
+    @OneToOne
+    private ThesisReview thesisReview;
 
     // Getters and setters omitted for brevity
 }

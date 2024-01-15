@@ -1,12 +1,13 @@
 package com.project.service;
 
 import com.project.entity.Thesis;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.project.entity.ThesisReview;
 import com.project.repository.ThesisRepository;
+import com.project.repository.ThesisReviewRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ThesisServiceImpl implements ThesisService {
@@ -14,24 +15,38 @@ public class ThesisServiceImpl implements ThesisService {
     private final ThesisRepository thesisRepository;
 
     @Autowired
+    private ThesisReviewServiceImpl thesisReviewService;
+
+
+    @Autowired
     public ThesisServiceImpl(ThesisRepository thesisRepository) {
         this.thesisRepository = thesisRepository;
     }
 
-    public List<Thesis> findAll() {
-        return thesisRepository.findAll();
-    }
-
-    public Optional<Thesis> findById(Long id) {
-        return thesisRepository.findById(id);
-    }
-
+    @Override
     public Thesis save(Thesis thesis) {
         return thesisRepository.save(thesis);
     }
 
-    public void deleteById(Long id) {
-        thesisRepository.deleteById(id);
+    @Override
+    /*** Как ще проверяваме дали текущият user е Студент или преподавател */
+    @PreAuthorize("hasRole('TEACHER')")
+    public void processThesis(Long thesisId, ThesisReview thesisReview) throws Exception {
+        Thesis existingThesis = thesisRepository.findById(thesisId).get();
+
+        if(existingThesis.getThesisReview() != null){
+            throw new Exception("ThesisReview already exists!");
+        }
+
+        existingThesis.setThesisReview(thesisReview);
+    }
+
+
+    @Override
+    @PreAuthorize("hasRole('STUDENT')")
+    public Thesis uploadThesis(Thesis thesis) {
+        return thesisRepository.save(thesis);
+
     }
 
 }

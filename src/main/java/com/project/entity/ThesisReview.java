@@ -19,14 +19,14 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name = "diploma_reviews")
-public class DiplomaReview {
+@Table(name = "thesis_review")
+public class ThesisReview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "diploma_work_id")
+    @JoinColumn(name = "thesis_id")
     private Thesis thesis;
 
     @ManyToOne(fetch = FetchType.EAGER)
