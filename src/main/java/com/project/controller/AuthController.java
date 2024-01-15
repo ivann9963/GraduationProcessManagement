@@ -58,11 +58,7 @@ public class AuthController {
         newUser.setUsername(registrationDto.getUsername());
         newUser.setPassword(encodeBase64(registrationDto.getPassword()));
         userRepository.save(newUser);
-
-        Map<String, String> response = new HashMap<>();
-        response.put("username", newUser.getUsername());
-        response.put("password", newUser.getPassword());
-        return ResponseEntity.ok().body(response);
+        return ResponseEntity.ok().body(newUser);
     }
 
     @PostMapping("/login")
@@ -74,7 +70,7 @@ public class AuthController {
         User user = userRepository.findByUsername(loginDto.getUsername()).get();
 
         if (decodeBase64(user.getPassword()).equals(loginDto.getPassword())) {
-            return ResponseEntity.ok().body(Map.of("message", "User authenticated"));
+            return ResponseEntity.ok().body(user);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
         }
