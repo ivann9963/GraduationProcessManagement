@@ -8,7 +8,7 @@ public interface ManagementService {
 
     Thesis uploadThesis(Thesis thesis);
 
-    void processThesis(Thesis thesis);
+    Thesis processThesis(Thesis thesis);
 
     ManagementSystem createOrUpdateManagementSystem(ManagementSystem managementSystem);
 }

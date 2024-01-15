@@ -5,8 +5,8 @@ import com.project.service.ManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,8 +21,8 @@ public class ManagementSystemController {
     }
 
     @PostMapping("/upload-thesis")
-    public ResponseEntity<?> uploadThesis(@RequestParam("thesis") Thesis thesis) {
-        try {;
+    public ResponseEntity<?> uploadThesis(@RequestBody Thesis thesis) {
+        try {
             Thesis uploadedThesis = managementService.uploadThesis(thesis);
             return ResponseEntity.ok(uploadedThesis);
         } catch (Exception e) {
@@ -32,7 +32,7 @@ public class ManagementSystemController {
 
 
     @PostMapping("/process-thesis")
-    public void processThesis(Thesis thesis) {
+    public void processThesis(@RequestBody Thesis thesis) {
         // Call service method to process the thesis
         managementService.processThesis(thesis);
     }

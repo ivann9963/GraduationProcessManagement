@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class MangementServiceImpl implements ManagementService {
+public class ManagementServiceImpl implements ManagementService {
     private final ManagementSystemRepository managementSystemRepository;
 
     @Autowired
-    public MangementServiceImpl(ManagementSystemRepository managementSystemRepository) {
+    public ManagementServiceImpl(ManagementSystemRepository managementSystemRepository) {
         this.managementSystemRepository = managementSystemRepository;
     }
 
@@ -26,8 +26,8 @@ public class MangementServiceImpl implements ManagementService {
     @Override
     /*** Как ще проверяваме дали текущият user е Студент или преподавател */
     @PreAuthorize("hasRole('TEACHER')")
-    public void processThesis(Thesis thesis) {
-        // Logic for processing thesis
+    public Thesis processThesis(Thesis thesis) {
+        return null;
     }
 
     @Override

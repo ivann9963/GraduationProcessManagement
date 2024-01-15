@@ -7,17 +7,21 @@ import com.project.service.ManagementService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,35 +44,42 @@ public class ManagementSystemControllerTest {
 
     private Thesis sampleThesis;
 
-    private final String thesisJson = "{"
-            + "\"title\": \"Sample Thesis Title\","
-            + "\"objective\": \"Objective of the thesis\","
-            + "\"tasks\": \"List of tasks\","
-            + "\"technologies\": \"Used technologies\","
-            + "\"student\": {\"id\": 1},"
-            + "\"teacher\": {\"id\": 1},"
-            + "\"submissionDate\": \"2023-01-01T00:00:00\""
-            + "}";;
-
     @BeforeEach
-    public void setup() {
+    public void setup() throws ParseException {
         mockMvc = MockMvcBuilders.standaloneSetup(managementSystemController).build();
 
+
         sampleThesis = new Thesis();
-        // Initialize the properties of sampleThesis as needed for testing
+        sampleThesis.setTitle("Sample Thesis Title");
+        sampleThesis.setObjective("Objective of the thesis");
+        sampleThesis.setTasks("List of tasks");
+        sampleThesis.setTechnologies("Used technologies");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date submissionDate = dateFormat.parse("2023-01-01");
+        sampleThesis.setSubmissionDate(submissionDate);
     }
 
     @Test
+    @WithMockUser(username = "student", roles = {"STUDENT"})
     public void whenUploadThesis_thenReturnsThesis() throws Exception {
-        given(managementService.uploadThesis(sampleThesis)).willReturn(sampleThesis);
+        given(managementService.uploadThesis(any(Thesis.class))).willReturn(sampleThesis);
 
         mockMvc.perform(post("/api/management-system/upload-thesis")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(thesisJson)) // Using the thesisJson variable here
+                        .content(new ObjectMapper().writeValueAsString(sampleThesis)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value("Sample Thesis Title"));
     }
 
+    @Test
+    @WithMockUser(username = "teacher", roles = {"TEACHER"})
+    public void whenProcessThesis_thenSuccess() throws Exception {
+        given(managementService.processThesis(any(Thesis.class))).willReturn(null); // Assuming void return
 
-    // Additional tests...
+        mockMvc.perform(post("/api/management-system/process-thesis")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(sampleThesis)))
+                .andExpect(status().isOk());
+    }
+
 }
