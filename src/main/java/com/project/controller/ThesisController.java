@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import com.project.dto.ThesisUploadDto;
 import com.project.entity.Thesis;
 import com.project.entity.ThesisReview;
 import com.project.service.ThesisService;
@@ -23,7 +24,7 @@ public class ThesisController {
     }
 
     @PostMapping("/upload-thesis")
-    public ResponseEntity<?> uploadThesis(@RequestBody Thesis thesis) {
+    public ResponseEntity<?> uploadThesis(@RequestBody ThesisUploadDto thesis) {
         try {
             Thesis uploadedThesis = thesisService.uploadThesis(thesis);
             return ResponseEntity.ok(uploadedThesis);
