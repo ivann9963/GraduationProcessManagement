@@ -1,7 +1,9 @@
 package com.project.service;
 
 
+import com.project.dto.StudentDto;
 import com.project.entity.Student;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.project.repository.StudentRepository;
@@ -10,7 +12,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class StudentServiceImpl implements StudentService {
+public class StudentServiceImpl implements StudentService
+{
+    @Autowired
+    ModelMapper modelMapper;
     private final StudentRepository studentRepository;
 
     @Autowired
@@ -26,7 +31,8 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findById(id);
     }
 
-    public Student save(Student student) {
+    public Student save(StudentDto studentDto) {
+        Student student = modelMapper.map(studentDto, Student.class);
         return studentRepository.save(student);
     }
 

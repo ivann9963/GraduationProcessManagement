@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import com.project.dto.StudentDto;
 import com.project.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,19 +33,19 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student createStudent(@RequestBody Student student) {
-        return studentService.save(student);
+    public ResponseEntity<?> createStudent(@RequestBody StudentDto studentDto) {
+        return ResponseEntity.ok(studentService.save(studentDto));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student student) {
-        return studentService.findById(id)
-                .map(existingStudent -> {
-                    // Set the necessary fields from student to existingStudent
-                    return ResponseEntity.ok(studentService.save(existingStudent));
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student student) {
+//        return studentService.findById(id)
+//                .map(existingStudent -> {
+//                    // Set the necessary fields from student to existingStudent
+//                    return ResponseEntity.ok(studentService.save(existingStudent));
+//                })
+//                .orElseGet(() -> ResponseEntity.notFound().build());
+//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {

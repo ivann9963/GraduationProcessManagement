@@ -1,5 +1,6 @@
 package com.project.entity;
 
+import com.project.dto.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,14 +30,18 @@ public abstract class User implements UserDetails {
 
     private String username;
     private String password;
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
 
-    public enum Role {
-        STUDENT, TEACHER
-    }
-    public abstract Role getRole();
+    protected Role role;
+
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + getRole().name()));
+        return Collections.singletonList(new SimpleGrantedAuthority(getRole().name()));
     }
 
     @Override
@@ -51,23 +56,21 @@ public abstract class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return this.accountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return this.accountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return this.credentialsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return this.enabled;
     }
-
-    // Standard getters and setters
 }

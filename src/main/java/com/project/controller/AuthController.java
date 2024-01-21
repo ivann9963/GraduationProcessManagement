@@ -2,6 +2,7 @@ package com.project.controller;
 
 import com.project.dto.RegistrationDto;
 import com.project.dto.LoginDto;
+import com.project.dto.Role;
 import com.project.entity.Student;
 import com.project.entity.Teacher;
 import com.project.entity.User;
@@ -31,7 +32,7 @@ public class AuthController {
 
         User newUser;
         try {
-            User.Role role = EnumUtils.getEnumIgnoreCase(User.Role.class, registrationDto.getRole());
+            Role role = EnumUtils.getEnumIgnoreCase(Role.class, registrationDto.getRole());
 
             if (role == null) {
                 return ResponseEntity.badRequest().body("Invalid user type");
@@ -51,8 +52,9 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Invalid user type");
         }
 
+        newUser.setEnabled(true);
         newUser.setUsername(registrationDto.getUsername());
-        newUser.setPassword(encodeBase64(registrationDto.getPassword()));
+        newUser.setPassword(encodeBase64(registrationDto.getPassword())); // Encode password using BCrypt
         userRepository.save(newUser);
         return ResponseEntity.ok().body(newUser);
     }
@@ -62,8 +64,12 @@ public class AuthController {
         if (userRepository.findByUsername(loginDto.getUsername()).isEmpty()) {
             return ResponseEntity.badRequest().body("User does not exist");
         }
-
         User user = userRepository.findByUsername(loginDto.getUsername()).get();
+
+//        UsernamePasswordAuthenticationToken authRequest =
+//                new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
+//        Authentication authentication = authenticationManager.authenticate(authRequest);
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         if (decodeBase64(user.getPassword()).equals(loginDto.getPassword())) {
             return ResponseEntity.ok().body(user);

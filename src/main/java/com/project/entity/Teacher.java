@@ -1,5 +1,6 @@
 package com.project.entity;
 
+import com.project.dto.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,11 +11,10 @@ import lombok.Setter;
 @Table(name = "teachers")
 public class Teacher extends User{
 
-//    @Column(nullable = false)
     private String name;
 
     @Enumerated(EnumType.STRING)
-//    @Column(nullable = false)
+
     private Position position;
 
     @Override

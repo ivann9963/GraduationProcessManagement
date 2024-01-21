@@ -1,5 +1,6 @@
 package com.project.entity;
 
+import com.project.dto.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,14 +11,18 @@ import lombok.Setter;
 @Table(name = "students")
 public class Student extends User {
 
-//    @Column(nullable = false)
     private String name;
 
-//    @Column(nullable = false, unique = true)
     private String facultyNumber;
 
     @Override
     public Role getRole() {
         return Role.STUDENT;
     }
+
+    public Student() {
+        super.setRole(Role.STUDENT);
+    }
+
+
 }

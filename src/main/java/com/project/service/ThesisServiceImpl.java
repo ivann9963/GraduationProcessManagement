@@ -1,22 +1,24 @@
 package com.project.service;
 
+import com.project.dto.ThesisDto;
 import com.project.entity.Thesis;
 import com.project.entity.ThesisReview;
 import com.project.repository.ThesisRepository;
-import com.project.repository.ThesisReviewRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 @Service
 public class ThesisServiceImpl implements ThesisService {
 
+    @Autowired
+    ModelMapper modelMapper;
     private final ThesisRepository thesisRepository;
 
     @Autowired
     private ThesisReviewServiceImpl thesisReviewService;
-
 
     @Autowired
     public ThesisServiceImpl(ThesisRepository thesisRepository) {
@@ -29,8 +31,6 @@ public class ThesisServiceImpl implements ThesisService {
     }
 
     @Override
-    /*** Как ще проверяваме дали текущият user е Студент или преподавател */
-    @PreAuthorize("hasRole('TEACHER')")
     public void processThesis(Long thesisId, ThesisReview thesisReview) throws Exception {
         Thesis existingThesis = thesisRepository.findById(thesisId).get();
 
@@ -41,12 +41,16 @@ public class ThesisServiceImpl implements ThesisService {
         existingThesis.setThesisReview(thesisReview);
     }
 
+    @Override
+    public List<Thesis> getAllTheses() {
+        return thesisRepository.findAll();
+    }
 
     @Override
-    @PreAuthorize("hasRole('STUDENT')")
-    public Thesis uploadThesis(Thesis thesis) {
-        return thesisRepository.save(thesis);
-
+    public ThesisDto uploadThesis(ThesisDto thesisUploadDto) {
+        Thesis thesis = modelMapper.map(thesisUploadDto, Thesis.class);
+        Thesis savedThesis = thesisRepository.save(thesis);
+        return modelMapper.map(savedThesis, ThesisDto.class);
     }
 
 }

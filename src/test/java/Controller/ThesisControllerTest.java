@@ -2,6 +2,7 @@ package Controller;
 
 import com.project.GraduationProcessManagementApplication;
 import com.project.controller.ThesisController;
+import com.project.dto.ThesisDto;
 import com.project.entity.Thesis;
 import com.project.entity.ThesisReview;
 import com.project.service.ThesisService;
@@ -21,7 +22,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -47,7 +47,7 @@ public class ThesisControllerTest {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private Thesis sampleThesis;
+    private ThesisDto sampleThesis;
 
     private ThesisReview thesisReview;
 
@@ -56,7 +56,7 @@ public class ThesisControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(thesisController).build();
 
 
-        sampleThesis = new Thesis();
+        sampleThesis = new ThesisDto();
         sampleThesis.setTitle("Sample Thesis Title");
         sampleThesis.setObjective("Objective of the thesis");
         sampleThesis.setTasks("List of tasks");
@@ -74,7 +74,7 @@ public class ThesisControllerTest {
     @Test
     @WithMockUser(username = "student", roles = {"STUDENT"})
     public void whenUploadThesis_thenReturnsThesis() throws Exception {
-        given(thesisService.uploadThesis(any(Thesis.class))).willReturn(sampleThesis);
+        given(thesisService.uploadThesis(any(ThesisDto.class))).willReturn(sampleThesis);
 
         mockMvc.perform(post("/api/thesis/upload-thesis")
                         .contentType(MediaType.APPLICATION_JSON)
