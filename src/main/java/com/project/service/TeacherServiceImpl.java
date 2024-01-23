@@ -1,6 +1,7 @@
 package com.project.service;
 
 import com.project.entity.Teacher;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.project.repository.TeacherRepository;
@@ -9,7 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TeacherServiceImpl implements TeacherService{
+public class TeacherServiceImpl implements TeacherService {
+
+    @Autowired
+    private ModelMapper modelMapper;
     private final TeacherRepository teacherRepository;
 
     @Autowired

@@ -1,6 +1,5 @@
 package com.project.service;
 
-import com.project.dto.StudentDto;
 import com.project.entity.Student;
 
 import java.util.List;
@@ -11,7 +10,7 @@ public interface StudentService {
 
     Optional<Student> findById(Long id);
 
-    Student save(StudentDto studentDto);
+    Student save(Student studentDto);
 
     void deleteById(Long id);
 }

@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import com.project.dto.TeacherDto;
 import com.project.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,13 +38,12 @@ public class TeacherController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Teacher> updateTeacher(@PathVariable Long id, @RequestBody Teacher teacher) {
-        return teacherService.findById(id)
-                .map(existingTeacher -> {
-                    // Set the necessary fields from teacher to existingTeacher
-                    return ResponseEntity.ok(teacherService.save(existingTeacher));
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<?> updateTeacher(@PathVariable Long id, @RequestBody TeacherDto teacherDto) {
+        Teacher tmp = teacherService.findById(id).get();
+        tmp.setPosition(teacherDto.getPosition());
+        tmp.setName(teacherDto.getName());
+        Teacher t = teacherService.save(tmp);
+        return ResponseEntity.ok(t);
     }
 
     @DeleteMapping("/{id}")

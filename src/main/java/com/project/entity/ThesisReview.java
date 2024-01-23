@@ -33,11 +33,10 @@ public class ThesisReview {
     @JoinColumn(name = "teacher_id")
     private Teacher reviewer;
 
-    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date submissionDate;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String text;
 
     @Column(nullable = false)

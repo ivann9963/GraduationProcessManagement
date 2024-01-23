@@ -33,19 +33,10 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createStudent(@RequestBody StudentDto studentDto) {
-        return ResponseEntity.ok(studentService.save(studentDto));
+    public ResponseEntity<?> createStudent(@RequestBody Student student) {
+        return ResponseEntity.ok(studentService.save(student));
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student student) {
-//        return studentService.findById(id)
-//                .map(existingStudent -> {
-//                    // Set the necessary fields from student to existingStudent
-//                    return ResponseEntity.ok(studentService.save(existingStudent));
-//                })
-//                .orElseGet(() -> ResponseEntity.notFound().build());
-//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
@@ -55,5 +46,15 @@ public class StudentController {
                     return ResponseEntity.ok().<Void>build();
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateStudent(@PathVariable Long id, @RequestBody StudentDto studentDto) {
+        Student tmp = studentService.findById(id).get();
+        tmp.setFacultyNumber(studentDto.getFacultyNumber());
+        tmp.setName(studentDto.getName());
+        Student s = studentService.save(tmp);
+        return ResponseEntity.ok(s);
     }
 }

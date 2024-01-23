@@ -1,5 +1,6 @@
 package com.project.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -49,7 +50,8 @@ public class Thesis {
     @Temporal(TemporalType.TIMESTAMP)
     private Date submissionDate;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "thesis_review_id", referencedColumnName = "id")
     private ThesisReview thesisReview;
 
     // Getters and setters omitted for brevity

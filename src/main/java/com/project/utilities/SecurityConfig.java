@@ -18,49 +18,17 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-//    private final AuthenticationManager authenticationManager;
-//    public SecurityConfig(AuthenticationManager authenticationManager) {
-//        this.authenticationManager = authenticationManager;
-//    }
-
     @Autowired
     private UserDetailsService userDetailsService;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-//                .addFilterBefore(new CustomHeaderAuthenticationFilter(authenticationManager),
-//                        UsernamePasswordAuthenticationFilter.class)
-//                .userDetailsService(userDetailsService)
-
-                .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/api/register", "/api/login").permitAll()
-//                        .requestMatchers("/api/thesis/upload-thesis").hasRole("STUDENT")
-                        .requestMatchers("/api/thesis/upload-thesis").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .formLogin()
-                .loginProcessingUrl("/api/login")  // handle login attempt
-                .permitAll()
-                .and()
-                .logout()
-                .logoutUrl("/api/logout")  // handle logout
-                .permitAll()
-                .and()
-                .formLogin().disable() // Disable form login
-                .httpBasic().disable() // Disable HTTP basic authentication
-                .csrf().disable();  // CSRF is handled via the session mechanism
+                .formLogin().disable()
+                .httpBasic().disable()
+                .csrf().disable();
 
         return http.build();
     }
-
-
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userDetailsService)
-//                .passwordEncoder(passwordEncoder());
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -69,7 +37,6 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManagerBean(HttpSecurity http) throws Exception {
-        // Configure and return the built-in authentication manager
         return http.getSharedObject(AuthenticationManagerBuilder.class).build();
     }
 }
